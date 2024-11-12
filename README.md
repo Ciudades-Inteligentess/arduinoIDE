@@ -31,7 +31,7 @@ Cada mensaje JSON enviado tiene la siguiente estructura:
   "timestamp": "<fecha y hora actuales>"
 }
 
-
+```
 ## Pasos para Ejecutar el Proyecto desde PlatformIO
 
 Sigue los pasos a continuación para configurar y ejecutar el proyecto en PlatformIO, utilizando un ESP8266:
