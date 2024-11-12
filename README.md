@@ -30,3 +30,65 @@ Cada mensaje JSON enviado tiene la siguiente estructura:
   "trafficligh_id": "1",
   "timestamp": "<fecha y hora actuales>"
 }
+
+
+## Pasos para Ejecutar el Proyecto desde PlatformIO
+
+Sigue los pasos a continuación para configurar y ejecutar el proyecto en PlatformIO, utilizando un ESP8266:
+
+### Requisitos Previos
+
+1. **Instalar PlatformIO**:
+   - Si no tienes PlatformIO instalado, puedes hacerlo mediante [Visual Studio Code](https://code.visualstudio.com/) siguiendo estos pasos:
+     - Descarga e instala Visual Studio Code.
+     - Abre Visual Studio Code y ve a la pestaña de **Extensiones** (icono de cuadrado en la barra lateral izquierda).
+     - Busca **PlatformIO IDE** e instálalo.
+
+2. **Instalar las Librerías Necesarias**:
+   - El proyecto usa varias librerías de Arduino, incluidas `PubSubClient`, `ArduinoJson`, y `ESP8266WiFi`, entre otras. PlatformIO generalmente las gestionará automáticamente si las defines en el archivo `platformio.ini`, pero asegúrate de tenerlas disponibles.
+   
+3. **Certificados y Claves de AWS IoT**:
+   - Asegúrate de haber descargado y configurado correctamente los certificados de AWS IoT (certificados de cliente y clave privada). Estos deben estar en los archivos de tu proyecto como `cacert`, `client_cert`, y `privkey`, o puedes ajustarlos según tu configuración.
+
+### Pasos para Correr el Proyecto
+
+1. **Clonar o Descargar el Proyecto**:
+   - Si aún no tienes el proyecto en tu máquina local, clónalo usando Git o descárgalo como un archivo ZIP desde tu repositorio de GitHub.
+     ```bash
+     git clone https://github.com/Ciudades-Inteligentess/arduinoIDE
+     ```
+     O simplemente descarga el ZIP desde GitHub y extráelo en tu máquina.
+
+2. **Abrir el Proyecto en PlatformIO**:
+   - Abre Visual Studio Code con PlatformIO instalado.
+   - Desde el menú de PlatformIO, selecciona **Open Project** y navega hasta la carpeta del proyecto que acabas de clonar o descargar.
+
+3. **Configurar `platformio.ini`**:
+   - Asegúrate de que tu archivo `platformio.ini` esté configurado correctamente con los parámetros del ESP8266. A continuación, un ejemplo básico de configuración:
+     ```ini
+     [env:esp8266]
+     platform = espressif8266
+     board = esp01_1m
+     framework = arduino
+     monitor_speed = 115200
+     upload_speed = 115200
+     lib_deps = 
+        PubSubClient
+        ArduinoJson
+     ```
+
+4. **Subir el Código al ESP8266**:
+   - Conecta tu ESP8266 al puerto USB de tu computadora.
+   - En PlatformIO, haz clic en el ícono de **Subir** (ícono de la flecha hacia arriba) para compilar y cargar el código en el ESP8266.
+   - Asegúrate de seleccionar el puerto correcto si PlatformIO no lo detecta automáticamente.
+
+5. **Monitorear la Salida Serial**:
+   - Después de que el código se cargue correctamente en el ESP8266, abre el **Monitor Serial** desde PlatformIO haciendo clic en el ícono del monitor (un rectángulo con una onda de señal) en la barra de tareas de PlatformIO.
+   - Deberías ver el proceso de conexión a la red Wi-Fi, la sincronización con el servidor NTP y la conexión a AWS IoT. Si todo está configurado correctamente, el dispositivo comenzará a enviar datos del sensor ultrasónico.
+
+### Solución de Problemas
+
+- **Conexión Wi-Fi**: Si el ESP8266 no se conecta a la red Wi-Fi, verifica las credenciales de la red (`WIFI_SSID` y `WIFI_PASSWORD`) en el código.
+- **Certificados de AWS IoT**: Si el ESP8266 no puede conectarse a AWS IoT, asegúrate de que los certificados estén correctamente configurados y accesibles en el proyecto.
+
+¡Listo! Ahora deberías estar recibiendo datos de distancia del sensor ultrasónico en AWS IoT Core.
